@@ -6,7 +6,7 @@ def rando(features):
 def backward_elimination(features):
 
 
-    curr_set = list(range(0,features))
+    curr_set = list(range(1,int(features) + 1))
     best_overall = rando(curr_set)
     print("\nUsing no features and “random” evaluation, I get an accuracy of "
           f"{rando([])}%")
