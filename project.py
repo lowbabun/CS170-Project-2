@@ -37,9 +37,54 @@ def backward_elimination(features):
     print(f"Finished search!! The best feature subset is {curr_set}"
           f" with accuracy of {best_overall}%")
 
-
 def forward_selection(features):
-    print("not implemented yet")
+    features = int(features)
+    current_set = []
+
+    # Score with no features testing empty set
+    base_acc = rando(current_set)
+    print(f"Using no features and “random” evaluation, I get an accuracy of {base_acc}%")
+    print("Beginning search.")
+
+    best_subset = current_set.copy()   
+    best_score = base_acc              
+
+    # Add one feature at each level of the search tree
+    for level in range(1, features + 1):
+
+        feature_to_add = None
+        level_best_accuracy = -1
+
+        # Test each feature not in current_set
+        for feature in range(1, features + 1):
+            if feature not in current_set:
+                trial = current_set + [feature]
+                acc = rando(trial)
+                print(f"Using feature(s) {trial} accuracy is {acc}%")
+
+                if acc > level_best_accuracy:
+                    level_best_accuracy = acc
+                    feature_to_add = feature
+
+        # Add the best feature found at each level of the tree
+        if feature_to_add is not None:
+            new_set = current_set + [feature_to_add]
+
+            if level_best_accuracy < best_score:
+                print("(Warning, Accuracy has decreased!)")
+
+            print(f"Feature set {new_set} was best, accuracy is {level_best_accuracy}%")
+
+            current_set = new_set
+
+            # Store the best subset
+            if level_best_accuracy > best_score:
+                best_score = level_best_accuracy
+                best_subset = new_set.copy()
+
+    print(f"Finished search!! The best feature subset is {best_subset}, "
+          f"which has an accuracy of {best_score}%")
+
 
 
 def main():
