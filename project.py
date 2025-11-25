@@ -4,38 +4,38 @@ def rando(features):
     return round(random.uniform(20.0,80.0),1)
 
 def backward_elimination(features):
+    features = int(features)
+    curr_set = list(range(1, features + 1))
 
+    full_acc = rando(curr_set)
+    best_overall = full_acc
 
-    curr_set = list(range(0,features))
-    best_overall = rando(curr_set)
-    print("\nUsing no features and “random” evaluation, I get an accuracy of "
-          f"{rando([])}%")
+    print(f"\nUsing all features {curr_set} accuracy is {full_acc}%")
     print("\nBeginning search.\n")
 
-    while len(curr_set)>1:
-        feature_to_remove = -1
-        best_so_far = 0
+    while len(curr_set) > 1:
+        feature_to_remove = None
+        best_so_far = -1
 
         for feature in curr_set:
             temp_set = [x for x in curr_set if x != feature]
             score = rando(temp_set)
             print(f"Using features {temp_set} accuracy is {score}%")
-
-            if score>best_so_far:
+            if score > best_so_far:
                 best_so_far = score
                 feature_to_remove = feature
         
-        temp_set = [x for x in curr_set if x != feature_to_remove]
-        print(f"\nFeature set {temp_set} was best, accuracy is {best_so_far}%\n")
-
-        if best_so_far<best_overall:
-            print("Warning, Accuracy has decreased!")
-        
         curr_set.remove(feature_to_remove)
-        best_overall = max(best_overall, best_so_far)
+        print(f"\nFeature set {curr_set} was best, accuracy is {best_so_far}%\n")
 
-    print(f"Finished search!! The best feature subset is {curr_set}"
-          f" with accuracy of {best_overall}%")
+        if best_so_far < best_overall:
+            print("(Warning, Accuracy has decreased!)")
+
+        if best_so_far > best_overall:
+            best_overall = best_so_far
+
+    print(f"Finished search!! The best feature subset is {curr_set} with accuracy of {best_overall}%")
+
 
 def forward_selection(features):
     features = int(features)
