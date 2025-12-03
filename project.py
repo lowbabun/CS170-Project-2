@@ -88,7 +88,7 @@ def forward_selection(features):
 
 
 def main():
-    print("Welcome to Chao Wei and Ryans Feature Selection Algorithm")
+    print("Welcome to Chao Wei and Ryan's Feature Selection Algorithm")
     n = input("Please enter total number of features:")
     print("Type the number of the algorithm you want to run.")
     print("1. Forward Selection"
@@ -96,6 +96,9 @@ def main():
           "\n3. Chao and Ryan’s Special Algorithm.")
     choice = int(input())
 
+    while(choice < 1 or choice > 3):
+        print("Invalid choice, please enter a valid option.")
+        choice = int(input())
 
     if(choice == 1):
         forward_selection(n)
